@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<title>
+Tic Tac Toe
+</title>
+<head>
+<style>
+body{
+	display:table;
+	margin:10px auto;
+	text-align:center;
+	background:lightblue;
+	margin-bottom:0px;
+}
+
+#base{
+	background-color:black;
+	height:600px;
+	width:440px;
+	border:outset 10px;
+}
+
+#ttl{
+	height:100px;
+	width:420px;
+	background-color:#fff8dc;
+	margin:10px;
+	margin-bottom:0px;
+	color:Green;
+	font-size:60px;
+	font-family:Jokerman;
+}
+
+#menu{
+	height:40px;
+	width:420px;
+	background-color:#fff8dc;
+	margin:10px;
+	margin-bottom:0px;
+}
+
+#BtnArea{
+	height:420px;
+	width:420px;
+	background-color:#fff8dc;
+	margin:10px;
+	float:left;
+}
+.btn{
+	float:left;
+	padding:15px;
+}
+.btn input{
+	height:110px;
+	width:110px;
+	padding:10px;
+	font-size:80px;
+}
+
+.clr{
+	clear:both;
+}
+
+</style>
+</head>
+
+<body onload="NewGame()">
+
+<div id="base">
+
+<div id="ttl">
+Tic Tac Toe
+</div>
+
+<div id="menu">
+<input type="button" value="New Game" onclick="NewGame()">
+<br>X's score:<span id="xScore">0</span> || O's Score:<span id="oScore">0</span>
+</div>
+
+<div id="BtnArea">
+<div class="btn"><input type="button" id="A1" onclick="btnClk(this)"></div>
+<div class="btn"><input type="button" id="A2" onclick="btnClk(this)"></div>
+<div class="btn"><input type="button" id="A3" onclick="btnClk(this)"></div>
+<div class="clr"></div>
+<div class="btn"><input type="button" id="B1" onclick="btnClk(this)"></div>
+<div class="btn"><input type="button" id="B2" onclick="btnClk(this)"></div>
+<div class="btn"><input type="button" id="B3" onclick="btnClk(this)"></div>
+<div class="clr"></div> 
+<div class="btn"><input type="button" id="C1" onclick="btnClk(this)"></div>
+<div class="btn"><input type="button" id="C2" onclick="btnClk(this)"></div>
+<div class="btn"><input type="button" id="C3" onclick="btnClk(this)"></div>
+<div class="clr"></div>
+</div>
+
+
+
+</div>
+<script>
+var count=xPT=oPT=0;
+var LastValue;
+var isWinner=false;
+function NewGame()
+{
+	if(count>0 ||xPT>0 ||oPT>0)
+	{
+		var NG=confirm("Do you want to Start New Game?")
+		
+		if(NG==true)
+		{
+			count=0;
+			isWinner=false;
+			LastValue=null;
+			document.getElementById('xScore').innerHTML=count;
+			document.getElementById('oScore').innerHTML=count;
+			A1.value=A2.value=A3.value=B1.value=B2.value=B3.value=C1.value=C2.value=C3.value="";
+			A1.disabled=A2.disabled=A3.disabled=B1.disabled=B2.disabled=B3.disabled=C1.disabled=C2.disabled=C3.disabled=false;
+		}
+	}
+}
+function btnClk(btnCTRL)
+{
+	//alert(btnCTRL);
+		
+	if(parseInt(count)%2==0)
+	{
+		btnCTRL.value="X";
+	}
+	else
+	{
+		btnCTRL.value="O";
+	}
+	btnCTRL.disabled=true;
+	LastValue=btnCTRL.value;
+	count++;
+	chkGame();
+}
+function chkGame()
+{
+	isWinner=false;
+	
+	//horizontal check
+	if(A1.value==A2.value && A2.value==A3.value && A2.disabled==true)
+	{
+		isWinner=true;
+	}
+	if(B1.value==B2.value && B2.value==B3.value && B2.disabled==true)
+	{
+		isWinner=true;
+	}
+	if(C1.value==C2.value && C2.value==C3.value && C2.disabled==true)
+	{
+		isWinner=true;
+	}
+	
+	//vertical check
+	if(A1.value==B1.value && B1.value==C1.value && B1.disabled==true)
+	{
+		isWinner=true;
+	}
+	if(A2.value==B2.value && B2.value==C2.value && B2.disabled==true)
+	{
+		isWinner=true;
+	}
+	if(A3.value==B3.value && B3.value==C3.value && B3.disabled==true)
+	{
+		isWinner=true;
+	}
+	
+	//cross check
+	if(A1.value==B2.value && B2.value==C3.value && B2.disabled==true)
+	{
+		isWinner=true;
+	}
+	if(C1.value==B2.value && B2.value==A3.value && B2.disabled==true)
+	{
+		isWinner=true;
+	}
+	
+	//check for winner
+	if(isWinner==true)
+	{
+		alert(LastValue+" won this game!");
+		
+		if(LastValue=="X")
+		{
+			++xPT;
+			document.getElementById('xScore').innerHTML=xPT;
+		}
+		else if(LastValue=="O")
+		{
+			++oPT;
+			document.getElementById('oScore').innerHTML=oPT;
+		}
+		
+		//start next game
+		count=0;
+		A1.value=A2.value=A3.value=B1.value=B2.value=B3.value=C1.value=C2.value=C3.value="";
+		A1.disabled=A2.disabled=A3.disabled=B1.disabled=B2.disabled=B3.disabled=C1.disabled=C2.disabled=C3.disabled=false;
+	}
+	
+	if(isWinner==false && A1.value!="" && A2.value!=""&&A3.value!=""&&B1.value!=""&&B2.value!=""&&B3.value!=""&&C1.value!=""&&C2.value!=""&&C3.value!="")
+	{
+		alert("Draw!");
+		count=0;
+		A1.value=A2.value=A3.value=B1.value=B2.value=B3.value=C1.value=C2.value=C3.value="";
+		A1.disabled=A2.disabled=A3.disabled=B1.disabled=B2.disabled=B3.disabled=C1.disabled=C2.disabled=C3.disabled=false;
+	}
+}
+</script>
+</body>
+</html>
